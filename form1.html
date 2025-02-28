@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+    <style>
+        .form-table {
+            border-collapse: collapse;
+            width: 500px;
+        }
+        .form-table td {
+            padding: 8px;
+            vertical-align: top;
+        }
+        .form-table tr:last-child td {
+            text-align: center;
+        }
+        .invisible-table {
+            border: none;
+        }
+        .invisible-table td {
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <h2>用户注册</h2>
+    <form>
+        <table class="form-table invisible-table">
+            <tr>
+                <td>用户名称：</td>
+                <td><input type="text" id="username" value="zhangsan"></td>
+            </tr>
+            <tr>
+                <td>用户密码：</td>
+                <td><input type="password" id="password"></td>
+            </tr>
+            <tr>
+                <td>用户性别：</td>
+                <td>
+                    <input type="radio" name="gender" id="male"> 男
+                    <input type="radio" name="gender" id="female"> 女
+                </td>
+            </tr>
+            <tr>
+                <td>爱好：</td>
+                <td>
+                    <input type="checkbox"> 足球
+                    <input type="checkbox"> 篮球
+                    <input type="checkbox"> LOL
+                    <input type="checkbox"> 韩剧
+                    <input type="checkbox"> 王者荣耀
+                </td>
+            </tr>
+            <tr>
+                <td>邮箱：</td>
+                <td>
+                    <input type="email" placeholder="请输入您的邮箱">
+                </td>
+            </tr>
+            <tr>
+                <td>用户头像：</td>
+                <td>
+                    <input type="file">
+                </td>
+            </tr>
+            <tr>
+                <td>您的家庭住址是：</td>
+                <td>
+                    <select>
+                        <option>陕西</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>您的建议或者意见：</td>
+                <td>
+                    <textarea rows="4" style="width: 100%"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit">提交</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
