@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quadratic Equation Solver</title>
+    <style>
+        .equation {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin: 20px;
+        }
+        input {
+            width: 60px;
+            padding: 5px;
+        }
+        #solution {
+            margin: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            min-height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="equation">
+        <input type="number" id="a" step="any">x² + 
+        <input type="number" id="b" step="any">x + 
+        <input type="number" id="c" step="any"> = 0
+    </div>
+    <div id="solution">Enter coefficients above</div>
+
+    <script>
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => input.addEventListener('input', updateSolution));
+
+        function updateSolution() {
+            const a = parseFloat(document.getElementById('a').value);
+            const b = parseFloat(document.getElementById('b').value);
+            const c = parseFloat(document.getElementById('c').value);
+            
+            let solutionText = '';
+            
+            if (isNaN(a) || isNaN(b) || isNaN(c)) {
+                solutionText = "Please enter valid numbers";
+            } else if (a === 0) {
+                // Linear equation case ‌:ml-citation{ref="7" data="citationList"}
+                if (b === 0) {
+                    solutionText = c === 0 ? "All real numbers are solutions" : "No solution";
+                } else {
+                    const root = -c / b;
+                    solutionText = `x = ${root.toFixed(2)}`;
+                }
+            } else {
+                const delta = b*b - 4*a*c;
+                const denominator = 2*a;
+
+                if (delta > 0) {
+                    const sqrtDelta = Math.sqrt(delta);
+                    const x1 = (-b + sqrtDelta)/denominator;
+                    const x2 = (-b - sqrtDelta)/denominator;
+                    solutionText = `x₁ = ${x1.toFixed(2)}, x₂ = ${x2.toFixed(2)}`;
+                } else if (delta === 0) {
+                    const x = -b/denominator;
+                    solutionText = `x = ${x.toFixed(2)}`;
+                } else {
+                    const realPart = (-b/denominator).toFixed(2);
+                    const imagPart = (Math.sqrt(-delta)/denominator).toFixed(2);
+                    solutionText = `x₁ = ${realPart} + ${imagPart}i<br>
+                                  x₂ = ${realPart} - ${imagPart}i`;
+                }
+            }
+
+            document.getElementById('solution').innerHTML = solutionText;
+        }
+    </script>
+</body>
+</html>
