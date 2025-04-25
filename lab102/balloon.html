@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flying Balloons</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const colors = ['red', 'orange', 'yellow', 'green', 'black', 'blue', 'purple'];
+        const burstAltitude = 100; // Burst when balloons reach this y-position
+        let balloons = [];
+
+        function createBalloon() {
+            const x = Math.random() * canvas.width;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const speed = 1 + Math.random() * 2;
+            balloons.push({
+                x: x,
+                y: canvas.height,
+                baseSize: 15 + Math.random() * 15,
+                size: 15 + Math.random() * 15,
+                color: color,
+                speed: speed,
+                burst: false
+            });
+        }
+
+        function updateBalloons() {
+            // Update balloon positions and sizes
+            balloons.forEach(balloon => {
+                balloon.y -= balloon.speed;
+                // Increase size based on altitude (simulate pressure change)
+                balloon.size = balloon.baseSize * (1 + (canvas.height - balloon.y) / 200);
+            });
+
+            // Burst balloons one by one when they reach altitude
+            for (let i = balloons.length - 1; i >= 0; i--) {
+                if (balloons[i].y <= burstAltitude && !balloons[i].burst) {
+                    balloons.splice(i, 1);
+                    break; // Only remove one balloon per frame
+                }
+            }
+        }
+
+        function drawBalloons() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            balloons.forEach(balloon => {
+                // Draw balloon body
+                ctx.beginPath();
+                ctx.arc(balloon.x, balloon.y, balloon.size, 0, Math.PI * 2);
+                ctx.fillStyle = balloon.color;
+                ctx.fill();
+
+                // Draw balloon string
+                ctx.beginPath();
+                ctx.moveTo(balloon.x, balloon.y + balloon.size);
+                ctx.lineTo(balloon.x + balloon.size/3, balloon.y + balloon.size * 2);
+                ctx.lineTo(balloon.x - balloon.size/3, balloon.y + balloon.size * 2);
+                ctx.strokeStyle = '#666';
+                ctx.stroke();
+            });
+        }
+
+        function animate() {
+            // Create new balloons randomly
+            if (Math.random() < 0.03) {
+                createBalloon();
+            }
+
+            updateBalloons();
+            drawBalloons();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
